@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1
+// @version     1.0.1
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     GPL-3.0
@@ -84,11 +84,16 @@ Autocomplete.prototype.executeOnce = function () {
             });
         },
         function (val, item) {
-            if(window.$codes[item.substring(1,item.length)]){
+            if (window.$codes[item.substring(1, item.length)]) {
                 return val.lastIndexOf(item) === 0;
             }
             return false;
         });
+    events.on('InputKeydown', function (event) {
+        if (event.keyCode !== 40 && event.keyCode !== 38) {
+            th.enabled = true;
+        }
+    });
 };
 
 Autocomplete.prototype.preConnect = function () {
@@ -155,7 +160,9 @@ Autocomplete.prototype.preConnect = function () {
         open: function () {
             th.menuActive = true;
         }
+    }).on('paste', function () {
+        th.enabled = false;
     });
 };
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete("1");
+window.plugins.autocomplete = new Autocomplete("1.0.1");
