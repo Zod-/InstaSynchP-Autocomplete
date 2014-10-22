@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.1
+// @version     1.0.2
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     GPL-3.0
@@ -48,24 +48,22 @@ function Autocomplete(version) {
     }];
 }
 
-function autocompleteRef() {
-    return window.plugins.autocomplete;
-}
-
 Autocomplete.prototype.resetVariables = function () {
+    "use strict";
     this.menuActive = false;
     this.enabled = true;
 };
 
 Autocomplete.prototype.addSource = function (source, select) {
+    "use strict";
     this.sources.push(source);
     this.selects.push(select);
 };
 
 Autocomplete.prototype.executeOnce = function () {
     "use strict";
-    var th = autocompleteRef();
-    events.on('InputKeydown[9]', function (event) {
+    var th = this;
+    events.on(th, 'InputKeydown[9]', function (event) {
         if (!th.menuActive) {
             return;
         }
@@ -74,6 +72,9 @@ Autocomplete.prototype.executeOnce = function () {
     });
 
     th.addSource(function (term) {
+            if (!gmc.get('autocomplete-emotes')) {
+                return [];
+            }
             var lastIndex = term.lastIndexOf('/'),
                 partToComplete = term.substring(lastIndex, term.length).toLowerCase();
             return $.map(Object.keys(window.$codes), function (item) {
@@ -89,7 +90,7 @@ Autocomplete.prototype.executeOnce = function () {
             }
             return false;
         });
-    events.on('InputKeydown', function (event) {
+    events.on(th, 'InputKeydown', function (event) {
         if (event.keyCode !== 40 && event.keyCode !== 38) {
             th.enabled = true;
         }
@@ -98,7 +99,7 @@ Autocomplete.prototype.executeOnce = function () {
 
 Autocomplete.prototype.preConnect = function () {
     "use strict";
-    var th = autocompleteRef();
+    var th = this;
     //add the jquery autcomplete widget to InstaSynch's input field
     $("#cin").autocomplete({
         delay: 0,
@@ -151,7 +152,7 @@ Autocomplete.prototype.preConnect = function () {
             return false;
         },
         autoFocus: true,
-        focus: function (event, ui) {
+        focus: function () {
             return false;
         },
         close: function () {
@@ -164,5 +165,6 @@ Autocomplete.prototype.preConnect = function () {
         th.enabled = false;
     });
 };
+
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete("1.0.1");
+window.plugins.autocomplete = new Autocomplete("1.0.2");
