@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.2
+// @version     1.0.3
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     GPL-3.0
@@ -21,6 +21,7 @@
 function Autocomplete(version) {
     "use strict";
     this.version = version;
+    this.name = 'InstaSynchP Autocomplete';
     this.menuActive = false;
     this.enabled = true;
     this.sources = [];
@@ -167,4 +168,4 @@ Autocomplete.prototype.preConnect = function () {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete("1.0.2");
+window.plugins.autocomplete = new Autocomplete('1.0.3');
