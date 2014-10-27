@@ -6,7 +6,7 @@
 // @version     1.0.3
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
-// @license     GPL-3.0
+// @license     MIT
 
 // @include     http://*.instasynch.com/*
 // @include     http://instasynch.com/*
