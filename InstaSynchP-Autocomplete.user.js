@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.3
+// @version     1.0.4
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
@@ -27,6 +27,12 @@ function Autocomplete(version) {
     this.sources = [];
     this.selects = [];
     this.settings = [{
+        'label': 'Commands',
+        'id': 'autocomplete-commands',
+        'type': 'checkbox',
+        'default': true,
+        'section': ['Chat', 'Autocomplete']
+    }, {
         'label': 'Emotes',
         'id': 'autocomplete-emotes',
         'type': 'checkbox',
@@ -71,7 +77,7 @@ Autocomplete.prototype.executeOnce = function () {
         event.keyCode = $.ui.keyCode.ENTER;
         $(this).trigger(event);
     });
-
+    //emotes
     th.addSource(function (term) {
             if (!gmc.get('autocomplete-emotes')) {
                 return [];
@@ -86,11 +92,39 @@ Autocomplete.prototype.executeOnce = function () {
             });
         },
         function (val, item) {
+            //check if emote is at the beginning of the input
             if (window.$codes[item.substring(1, item.length)]) {
                 return val.lastIndexOf(item) === 0;
             }
             return false;
-        });
+        }
+    );
+
+    //commands
+    th.addSource(function (term) {
+            term = term.toLowerCase();
+            if (!gmc.get('autocomplete-commands')) {
+                return [];
+            }
+            return $.map(Object.keys(commands.getAll()), function (item) {
+                var command = commands.get(item);
+                if (item.startsWith(term)) {
+                    if (command.type === 'mod' && !window.isMod) {
+                        return undefined;
+                    }
+                    return command.name;
+                }
+            });
+        },
+        function (val, item) {
+            var command = commands.get(item);
+            if (command) {
+                return val.lastIndexOf(item) === 0 && !command.hasArguments;
+            }
+            return false;
+        }
+    );
+
     events.on(th, 'InputKeydown', function (event) {
         if (event.keyCode !== 40 && event.keyCode !== 38) {
             th.enabled = true;
@@ -131,24 +165,30 @@ Autocomplete.prototype.preConnect = function () {
         select: function (event, ui) {
             var val = this.value,
                 uiVal = ui.item.value,
-                i;
+                i,
+                instant = false;
             this.value = val.substring(0, val.lastIndexOf(uiVal[0])) + uiVal;
 
             for (i = 0; i < th.selects.length; i += 1) {
                 try {
                     //check if the item can be sent instantly
                     if (th.selects[i].apply(this, [this.value, uiVal])) {
-                        $(this).trigger(
-                            $.Event('keypress', {
-                                which: 13,
-                                keyCode: 13
-                            })
-                        );
+                        instant = true;
                         break;
                     }
                 } catch (err) {
                     window.console.log(err);
                 }
+            }
+            if (instant) {
+                $(this).trigger(
+                    $.Event('keypress', {
+                        which: 13,
+                        keyCode: 13
+                    })
+                );
+            } else {
+                this.value = this.value + ' ';
             }
             return false;
         },
@@ -168,4 +208,4 @@ Autocomplete.prototype.preConnect = function () {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete('1.0.3');
+window.plugins.autocomplete = new Autocomplete('1.0.4');
