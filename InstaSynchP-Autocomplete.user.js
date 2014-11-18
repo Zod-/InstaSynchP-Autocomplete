@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.4
+// @version     1.0.5
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
@@ -23,7 +23,7 @@ function Autocomplete(version) {
     this.version = version;
     this.name = 'InstaSynchP Autocomplete';
     this.menuActive = false;
-    this.enabled = true;
+    this.autocompleteEnabled = true;
     this.sources = [];
     this.selects = [];
     this.settings = [{
@@ -58,7 +58,7 @@ function Autocomplete(version) {
 Autocomplete.prototype.resetVariables = function () {
     "use strict";
     this.menuActive = false;
-    this.enabled = true;
+    this.autocompleteEnabled = true;
 };
 
 Autocomplete.prototype.addSource = function (source, select) {
@@ -127,7 +127,7 @@ Autocomplete.prototype.executeOnce = function () {
 
     events.on(th, 'InputKeydown', function (event) {
         if (event.keyCode !== 40 && event.keyCode !== 38) {
-            th.enabled = true;
+            th.autocompleteEnabled = true;
         }
     });
 };
@@ -145,7 +145,7 @@ Autocomplete.prototype.preConnect = function () {
                 words = request.term.split(' '),
                 last = words[words.length - 1];
             //return if autocomplete has been turned off by other plugins
-            if (!th.enabled || last.length === 0 || request.term.length !== $('#cin')[0].selectionStart) {
+            if (!th.autocompleteEnabled || last.length === 0 || request.term.length !== $('#cin')[0].selectionStart) {
                 response(result);
                 return;
             }
@@ -203,9 +203,9 @@ Autocomplete.prototype.preConnect = function () {
             th.menuActive = true;
         }
     }).on('paste', function () {
-        th.enabled = false;
+        th.autocompleteEnabled = false;
     });
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete('1.0.4');
+window.plugins.autocomplete = new Autocomplete('1.0.5');
