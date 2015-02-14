@@ -3,19 +3,19 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.5
+// @version     1.0.6
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
 
-// @include     http://*.instasynch.com/*
-// @include     http://instasynch.com/*
-// @include     http://*.instasync.com/*
-// @include     http://instasync.com/*
+// @include     *://instasynch.com/r/*
+// @include     *://*.instasync.com/r/*
 // @grant       none
 // @run-at      document-start
 
 // @require     https://greasyfork.org/scripts/5647-instasynchp-library/code/InstaSynchP%20Library.js
+// @require     http://code.jquery.com/jquery-2.1.3.min.js
+// @require     http://code.jquery.com/ui/1.11.3/jquery-ui.min.js
 // ==/UserScript==
 
 function Autocomplete(version) {
@@ -69,6 +69,11 @@ Autocomplete.prototype.addSource = function (source, select) {
 
 Autocomplete.prototype.executeOnce = function () {
     "use strict";
+    cssLoader.add({
+        'name': 'autocomplete',
+        'url': 'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css',
+        'autoload': true
+    });
     var th = this;
     events.on(th, 'InputKeydown[9]', function (event) {
         if (!th.menuActive) {
@@ -109,7 +114,7 @@ Autocomplete.prototype.executeOnce = function () {
             return $.map(Object.keys(commands.getAll()), function (item) {
                 var command = commands.get(item);
                 if (item.startsWith(term)) {
-                    if (command.type === 'mod' && !window.isMod) {
+                    if (command.type === 'mod' && !isMod()) {
                         return undefined;
                     }
                     return command.name;
@@ -153,7 +158,7 @@ Autocomplete.prototype.preConnect = function () {
                 try {
                     result = result.concat(th.sources[i].apply(this, [last]));
                 } catch (err) {
-                    window.console.log(err);
+                    log.error(th.name, "Source Error", err);
                 }
             }
             if (gmc.get('autocomplete-sort')) {
@@ -177,7 +182,7 @@ Autocomplete.prototype.preConnect = function () {
                         break;
                     }
                 } catch (err) {
-                    window.console.log(err);
+                    log.error(th.name, "Select Error", err);
                 }
             }
             if (instant) {
@@ -208,4 +213,4 @@ Autocomplete.prototype.preConnect = function () {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete('1.0.5');
+window.plugins.autocomplete = new Autocomplete('1.0.6');
