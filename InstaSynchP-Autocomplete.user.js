@@ -8,14 +8,13 @@
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
 
-// @include     *://instasynch.com/r/*
+// @include     *://instasync.com/r/*
 // @include     *://*.instasync.com/r/*
 // @grant       none
 // @run-at      document-start
 
 // @require     https://greasyfork.org/scripts/5647-instasynchp-library/code/InstaSynchP%20Library.js
-// @require     http://code.jquery.com/jquery-2.1.3.min.js
-// @require     http://code.jquery.com/ui/1.11.3/jquery-ui.min.js
+// @require     https://greasyfork.org/scripts/8072-jquery-ui-autocomplete/code/jQuery-ui-autocomplete.js?version=36815
 // ==/UserScript==
 
 function Autocomplete(version) {
