@@ -11,6 +11,8 @@ Settings
 
 *   Autocomplete emotes (On/Off)
 
+*   Autocomplete commands (On/Off)
+
 Example
 --------
 https://cdn.rawgit.com/Zod-/InstaSynchP-Autocomplete/master/Autocomplete.webm
