@@ -1,7 +1,7 @@
 InstaSynchP-Autocomplete
 ========================
 
-Autocompletes emotes (commands soon)
+Autocompletes emotes and commands
 
 Settings
 --------
