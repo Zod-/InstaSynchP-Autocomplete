@@ -157,7 +157,7 @@ Autocomplete.prototype.preConnect = function () {
         try {
           result = result.concat(th.sources[i].apply(this, [last]));
         } catch (err) {
-          log.error(th.name, "Source Error", err);
+          logger().error(th.name, "Source Error", err);
         }
       }
       if (gmc.get('autocomplete-sort')) {
@@ -181,7 +181,7 @@ Autocomplete.prototype.preConnect = function () {
             break;
           }
         } catch (err) {
-          log.error(th.name, "Select Error", err);
+          logger().error(th.name, "Select Error", err);
         }
       }
       if (instant) {
