@@ -3,7 +3,7 @@
 // @namespace   InstaSynchP
 // @description Autocompletes emotes
 
-// @version     1.0.8
+// @version     1.0.9
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
@@ -51,6 +51,11 @@ function Autocomplete(version) {
     'size': 1,
     'section': ['Chat', 'Autocomplete']
   }];
+  var styles = [{
+    'name': 'autocomplete',
+    'url': 'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css',
+    'autoload': true
+  }];
 }
 
 Autocomplete.prototype.resetVariables = function () {
@@ -67,11 +72,6 @@ Autocomplete.prototype.addSource = function (source, select) {
 
 Autocomplete.prototype.executeOnce = function () {
   "use strict";
-  cssLoader.add({
-    'name': 'autocomplete',
-    'url': 'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css',
-    'autoload': true
-  });
   var th = this;
   events.on(th, 'InputKeydown[9]', function (event) {
     if (!th.menuActive) {
@@ -211,4 +211,4 @@ Autocomplete.prototype.preConnect = function () {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete('1.0.8');
+window.plugins.autocomplete = new Autocomplete('1.0.9');
