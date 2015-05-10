@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name        InstaSynchP Autocomplete
 // @namespace   InstaSynchP
-// @description Autocompletes emotes
+// @description Autocomplete emotes, commands and others for the chat
 
-// @version     1.1.0
+// @version     1.1.1
 // @author      Zod-
 // @source      https://github.com/Zod-/InstaSynchP-Autocomplete
 // @license     MIT
@@ -25,36 +25,36 @@ function Autocomplete(version) {
   this.sources = [];
   this.selects = [];
   this.settings = [{
-    'label': 'Commands',
-    'id': 'autocomplete-commands',
-    'type': 'checkbox',
+    label: 'Autocomplete chat commands starting with \'',
+    id: 'autocomplete-commands',
+    type: 'checkbox',
     'default': true,
-    'section': ['Chat', 'Autocomplete']
+    section: ['Chat', 'Autocomplete']
   }, {
-    'label': 'Emotes',
-    'id': 'autocomplete-emotes',
-    'type': 'checkbox',
+    label: 'Autocomplete emotes starting with /',
+    id: 'autocomplete-emotes',
+    type: 'checkbox',
     'default': true,
-    'section': ['Chat', 'Autocomplete']
+    section: ['Chat', 'Autocomplete']
   }, {
-    'label': 'Sort results',
-    'id': 'autocomplete-sort',
-    'type': 'checkbox',
+    label: 'Sort the results of the autocomplete',
+    id: 'autocomplete-sort',
+    type: 'checkbox',
     'default': true,
-    'section': ['Chat', 'Autocomplete']
+    section: ['Chat', 'Autocomplete']
   }, {
-    'label': '# of results',
-    'id': 'autocomplete-results',
-    'type': 'int',
-    'min': 0,
+    label: '# of results shown in the autocomplete',
+    id: 'autocomplete-results',
+    type: 'int',
+    min: 0,
     'default': 7,
-    'size': 1,
-    'section': ['Chat', 'Autocomplete']
+    size: 1,
+    section: ['Chat', 'Autocomplete']
   }];
   this.styles = [{
-    'name': 'autocomplete',
-    'url': 'https://cdn.rawgit.com/Zod-/InstaSynchP-Autocomplete/b3812c5c3f27a72ff36d5f130b8e20ee96cad2ee/jquery-ui.css',
-    'autoload': true
+    name: 'autocomplete',
+    url: 'https://cdn.rawgit.com/Zod-/InstaSynchP-Autocomplete/b3812c5c3f27a72ff36d5f130b8e20ee96cad2ee/jquery-ui.css',
+    autoload: true
   }];
 }
 
@@ -148,7 +148,8 @@ Autocomplete.prototype.preConnect = function () {
         words = request.term.split(' '),
         last = words[words.length - 1];
       //return if autocomplete has been turned off by other plugins
-      if (!th.autocompleteEnabled || last.length === 0 || request.term.length !== $('#cin')[0].selectionStart) {
+      if (!th.autocompleteEnabled || last.length === 0 || request.term.length !==
+        $('#cin')[0].selectionStart) {
         response(result);
         return;
       }
@@ -211,4 +212,4 @@ Autocomplete.prototype.preConnect = function () {
 };
 
 window.plugins = window.plugins || {};
-window.plugins.autocomplete = new Autocomplete('1.1.0');
+window.plugins.autocomplete = new Autocomplete('1.1.1');
